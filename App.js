@@ -2,8 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import * as API from './helpers/api';
 import DeckList from './components/DeckList';
-import { TabNavigator } from 'react-navigation';
-import { Constants } from 'expo';
+import NewDeck from './components/NewDeck';
+import DeckDetails from './components/DeckDetails';
+import NewCard from './components/NewCard';
+import { TabNavigator, StackNavigator } from 'react-navigation';
+import { Constants, AppLoading } from 'expo';
 import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { red, white } from './helpers/colors';
 
@@ -23,6 +26,13 @@ const Tabs = TabNavigator({
       tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='cards' size={30} color={red} />
     }
   },
+  NewDeck: {
+    screen: NewDeck,
+    navigationOptions: {
+      tabBarLabel: 'Adicionar Deck',
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-add-circle' size={30} color={red} />
+    }
+  }
 }, {
     navigationOptions: {
       header: null,
@@ -44,29 +54,43 @@ const Tabs = TabNavigator({
     }
   })
 
-export default class App extends React.Component {
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs,
+  },
 
+  DeckDetails: {
+    screen: DeckDetails,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: red,
+        marginTop: -50,
+      }
+    }
+  }
+})
+
+export default class App extends React.Component {
+  state = {
+    loading: true,
+  }
   componentDidMount() {
-    API.initDeck()
-      .then(() => { return API.getDecks() })
-      .then(() => { return API.saveDeckTitle('Probono') })
-      .then(() => { return API.getDecks() })
-      .then(res => console.log(JSON.parse(res)))
-      .then(() => { return API.getDeck('Probono') })
-      .then(res => console.log(res))
-      .then(() => API.addCardToDeck('Probono', { question: 'who?', answer: 'me' }))
-      .then(() => { return API.getDecks() })
-      .then(res => console.log(JSON.parse(res)))
-      .then(() => API.addCardToDeck('JavaScript', { question: 'who?2', answer: 'me2' }))
-      .then(() => { return API.getDecks() })
-      .then(res => console.log(JSON.parse(res)))
+    API.initDeck().then(this.setState({ loading: false }))
   }
 
   render() {
+    const { loading } = this.state;
+    if (loading) {
+      return (
+        <AppLoading />
+      )
+    }
+
     return (
       <View style={{ flex: 1 }}>
         <UdaciStatusBar backgroundColor={'#DC493A'} barStyle='light-content' />
-        <Tabs />
+        <MainNavigator />
       </View>
     );
   }

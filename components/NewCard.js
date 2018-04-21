@@ -3,24 +3,34 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-nativ
 import Title from './Title';
 import { red, white, redDarker } from '../helpers/colors';
 
-export default class NewDeck extends React.Component {
+export default class NewCard extends React.Component {
 
   state = {
-    text: ''
+    answer: '',
+    question: ''
   }
 
   render() {
-    const { text } = this.state
+    const { answer, question } = this.state
     return (
       <View style={styles.AddDeck}>
-        <Title style={styles.AddDeckTitle}>Qual o nome do seu novo Deck?</Title>
+        <Title style={styles.AddDeckTitle}>Qual a pergunta a ser adicionada?</Title>
+
         <TextInput
-          placeholder="Nome do seu novo Deck"
+          placeholder="Pergunta"
           style={styles.InputStyle}
-          onChangeText={(text) => this.setState({ text })}
-          value={text}
+          onChangeText={(question) => this.setState({ question })}
+          value={question}
         />
-        <TouchableOpacity style={styles.BtnStyle} onPress={() => alert(text)}>
+
+        <TextInput
+          placeholder="Resposta"
+          style={styles.InputStyle}
+          onChangeText={(answer) => this.setState({ answer })}
+          value={answer}
+        />
+
+        <TouchableOpacity style={styles.BtnStyle} onPress={() => alert(`${question}:${answer}`)}>
           <Text style={styles.BtnText}>Adicionar</Text>
         </TouchableOpacity>
       </View>
@@ -40,7 +50,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   BtnStyle: {
-    marginTop: 20,
+    marginTop: 10,
     backgroundColor: red,
     padding: 10,
     paddingLeft: 50,
@@ -56,6 +66,7 @@ const styles = StyleSheet.create({
   InputStyle: {
     padding: 10,
     height: 40,
+    marginBottom: 10,
     width: '80%',
     borderColor: red,
     color: redDarker,

@@ -1,15 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { gray, white } from '../helpers/colors'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { gray, white, skin, red } from '../helpers/colors'
 import Title from './Title';
 
 export default class Deck extends React.Component {
+
+  componentDidMount() {
+    console.log(this.props)
+  }
+
   render() {
     return (
-      <View style={styles.boxDeck}>
-        <Title style={styles.deckTitle}>Deck Name</Title>
-        <Text style={styles.infoDeck}> 3 cards </Text>
-      </View>
+      <TouchableOpacity style={styles.boxDeck} onPress={() => this.props.navigation.navigate(
+        'DeckDetails', { id: this.props.deck.title }
+      )}>
+        <View style={styles.box}>
+          <Title style={styles.deckTitle}>{this.props.deck.title}</Title>
+          <Text style={styles.infoDeck}>{this.props.deck.questions.length} cards</Text>
+        </View>
+      </TouchableOpacity>
     )
   }
 }
@@ -17,9 +26,7 @@ export default class Deck extends React.Component {
 const styles = StyleSheet.create({
   boxDeck: {
     width: '80%',
-    backgroundColor: white,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: skin,
     margin: 10,
     borderRadius: 16,
     padding: 10,
@@ -31,8 +38,13 @@ const styles = StyleSheet.create({
       height: 3,
     }
   },
+  box: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   deckTitle: {
     fontSize: 16,
+    alignItems: 'center',
   },
   infoDeck: {
     fontSize: 12,
