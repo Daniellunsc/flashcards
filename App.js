@@ -1,6 +1,48 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import * as API from './helpers/api';
+import DeckList from './components/DeckList';
+import { TabNavigator } from 'react-navigation';
+import { Constants } from 'expo';
+import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { red, white } from './helpers/colors';
+
+function UdaciStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
+
+const Tabs = TabNavigator({
+  Decks: {
+    screen: DeckList,
+    navigationOptions: {
+      tabBarLabel: 'Decks',
+      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='cards' size={30} color={red} />
+    }
+  },
+}, {
+    navigationOptions: {
+      header: null,
+    },
+    tabBarOptions: {
+      activeTintColor: red,
+      style: {
+        height: 56,
+        backgroundColor: white,
+        shadowColor: 'rgba(0,0,0, 0.24)',
+        shadowOffset: {
+          width: 0,
+          height: 3
+        },
+        shadowRadius: 6,
+        shadowOpacity: 1
+      }
+
+    }
+  })
 
 export default class App extends React.Component {
 
@@ -22,10 +64,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+      <View style={{ flex: 1 }}>
+        <UdaciStatusBar backgroundColor={'#DC493A'} barStyle='light-content' />
+        <Tabs />
       </View>
     );
   }
