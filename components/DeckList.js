@@ -1,27 +1,34 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import Title from './Title';
 import Deck from './Deck';
 import { white } from '../helpers/colors';
 import * as API from '../helpers/api';
+import { receiveDecks } from '../actions';
+import { connect } from 'react-redux';
 
-export default class DeckList extends React.Component {
-  state = {
-    decks: {}
+class DeckList extends React.Component {
+  componentDidMount() {
+    API.getDecks().then(res => this.props.defineDecks(JSON.parse(res)))
   }
 
-  componentDidMount() {
-    API.getDecks().then(res => this.setState({ decks: JSON.parse(res) }))
+  renderItem = ({ item }) => {
+    return Object.keys(item).map(item => <Deck key={item} deck={this.props.decks[item]} navigation={this.props.navigation} />)
   }
 
   render() {
-    console.log(this.state)
+    // TO-DO Melhorar view durante carregamento
+    if (!this.props.decks) {
+      return (<View><Title>No Decks</Title></View>)
+    }
+
     return (
       <View style={styles.mainContainer}>
         <Title style={styles.MainTitle}>Seus Decks</Title>
-        {Object.keys(this.state.decks).map(deck =>
-          (<Deck key={deck} deck={this.state.decks[deck]} navigation={this.props.navigation} />)
-        )}
+        <FlatList
+          data={[this.props.decks]}
+          renderItem={this.renderItem}
+        />
       </View>
     )
   }
@@ -30,12 +37,27 @@ export default class DeckList extends React.Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: white,
   },
   MainTitle: {
+    alignSelf: 'center',
     fontSize: 24,
     marginTop: 30,
     marginBottom: 30,
   }
 })
+
+function MapStateToProps(state) {
+  console.log(state)
+  return {
+    decks: state.decks,
+  }
+}
+
+function MapDispatchToProps(dispatch) {
+  return {
+    defineDecks: (decks) => dispatch(receiveDecks(decks))
+  }
+}
+
+export default connect(MapStateToProps, MapDispatchToProps)(DeckList)

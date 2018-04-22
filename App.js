@@ -5,10 +5,14 @@ import DeckList from './components/DeckList';
 import NewDeck from './components/NewDeck';
 import DeckDetails from './components/DeckDetails';
 import NewCard from './components/NewCard';
+import Quiz from './components/Quiz';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Constants, AppLoading } from 'expo';
 import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { red, white } from './helpers/colors';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reducer';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -68,6 +72,29 @@ const MainNavigator = StackNavigator({
         marginTop: -50,
       }
     }
+  },
+
+  NewCard: {
+    screen: NewCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: red,
+        marginTop: -50,
+      }
+    }
+  },
+
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTintColor: white,
+      title: 'Quiz',
+      headerStyle: {
+        backgroundColor: red,
+        marginTop: -50,
+      }
+    }
   }
 })
 
@@ -88,10 +115,13 @@ export default class App extends React.Component {
     }
 
     return (
-      <View style={{ flex: 1 }}>
-        <UdaciStatusBar backgroundColor={'#DC493A'} barStyle='light-content' />
-        <MainNavigator />
-      </View>
+      <Provider store={createStore(reducer)}>
+        <View style={{ flex: 1 }}>
+          <UdaciStatusBar backgroundColor={'#DC493A'} barStyle='light-content' />
+          <MainNavigator />
+        </View>
+      </Provider>
+
     );
   }
 }

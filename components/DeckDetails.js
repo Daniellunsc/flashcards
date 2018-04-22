@@ -3,8 +3,9 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, StatusBar, Activit
 import Title from './Title';
 import { red, white, redDarker, gray, blue } from '../helpers/colors';
 import * as API from '../helpers/api';
+import { connect } from 'react-redux';
 
-export default class DeckDetails extends React.Component {
+class DeckDetails extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     const { id } = navigation.state.params
@@ -21,11 +22,12 @@ export default class DeckDetails extends React.Component {
   componentDidMount() {
     const { id } = this.props.navigation.state.params
     API.getDeck(id)
-      .then(res => this.setState({ deck: res, loading: false }))
+      .then(res => this.setState({ loading: false }))
   }
 
   render() {
-    const { deck, loading } = this.state
+    const { loading } = this.state
+    const { deck } = this.props
     if (loading) {
       return (
         <View style={styles.DeckDetails}>
@@ -38,11 +40,15 @@ export default class DeckDetails extends React.Component {
       <View style={styles.DeckDetails}>
         <Title style={styles.DeckTitle}>{deck.title}</Title>
         <Text style={styles.DeckSubTitle}>{deck.questions.length} cards</Text>
-        <TouchableOpacity style={styles.BtnStyle} >
+        <TouchableOpacity style={styles.BtnStyle} onPress={() => this.props.navigation.navigate(
+          'NewCard', { id: deck.title }
+        )}>
           <Text style={styles.BtnText}>Adicionar Card</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.BtnStyle, styles.BtnQuizStyle]} >
+        <TouchableOpacity style={[styles.BtnStyle, styles.BtnQuizStyle]} onPress={() => this.props.navigation.navigate(
+          'Quiz', { id: deck.title }
+        )}>
           <Text style={styles.BtnText}>Iniciar Quiz</Text>
         </TouchableOpacity>
       </View>
@@ -94,3 +100,13 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
   }
 })
+
+function mapStateToProps(state, props) {
+  const { id } = props.navigation.state.params
+  const deck = state.decks[id]
+  return {
+    deck,
+  }
+}
+
+export default connect(mapStateToProps)(DeckDetails)

@@ -25,6 +25,7 @@ export default class Deck extends React.Component {
 
 const styles = StyleSheet.create({
   boxDeck: {
+    alignSelf: 'center',
     width: '80%',
     backgroundColor: skin,
     margin: 10,

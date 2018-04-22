@@ -28,15 +28,12 @@ export function initDeck() {
       ]
     }
   }
-
   return AsyncStorage.getItem(DECK_KEY)
     .then(result => {
       const data = JSON.parse(result);
       if (data == undefined) {
         return AsyncStorage.setItem(DECK_KEY, JSON.stringify(INITIAL_DECK));
       }
-      return AsyncStorage.removeItem(DECK_KEY)
-        .then(AsyncStorage.setItem(DECK_KEY, JSON.stringify(INITIAL_DECK)))
     }
     )
 }

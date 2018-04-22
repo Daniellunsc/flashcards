@@ -2,12 +2,34 @@ import React from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Title from './Title';
 import { red, white, redDarker } from '../helpers/colors';
+import { connect } from 'react-redux'
+import { addCardToDeck } from '../actions/index';
+import * as API from '../helpers/api';
 
-export default class NewCard extends React.Component {
+class NewCard extends React.Component {
+
+  static navigationOptions = ({ navigation }) => {
+    const { id } = navigation.state.params
+    return {
+      title: 'Adicionar nova pergunta'
+    }
+  }
 
   state = {
     answer: '',
     question: ''
+  }
+
+  submitCard = () => {
+    const { id } = this.props.navigation.state.params
+    card = {
+      answer: this.state.answer,
+      question: this.state.question,
+    }
+    API.addCardToDeck(id, card)
+      .then(() => this.props.saveCard(id, card))
+      .then(() => alert('Card Salvo com sucesso'))
+      .then(() => this.props.navigation.goBack())
   }
 
   render() {
@@ -30,7 +52,7 @@ export default class NewCard extends React.Component {
           value={answer}
         />
 
-        <TouchableOpacity style={styles.BtnStyle} onPress={() => alert(`${question}:${answer}`)}>
+        <TouchableOpacity style={styles.BtnStyle} onPress={() => this.submitCard()}>
           <Text style={styles.BtnText}>Adicionar</Text>
         </TouchableOpacity>
       </View>
@@ -74,3 +96,11 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
   }
 })
+
+function mapDispatchToProps(dispatch) {
+  return {
+    saveCard: (id, card) => dispatch(addCardToDeck(id, card))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(NewCard);
