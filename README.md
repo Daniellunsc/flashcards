@@ -10,3 +10,7 @@ Depois dentro da pasta do repositório execute
 	npm start
 
 Depois selecione o seu emulador ou abra o expo para escanear o QRCode exibido!
+
+# Plataformas testadas
+
+O App foi testado apenas dentro do simulador para iPhones.
