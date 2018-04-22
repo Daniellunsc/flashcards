@@ -17,7 +17,6 @@ export function addDeck(deck) {
 }
 
 export function addCardToDeck(id, card) {
-  console.log(id, card)
   return {
     type: ADD_CARD_TO_DECK,
     id,
