@@ -4,11 +4,6 @@ import { gray, white, skin, red } from '../helpers/colors'
 import Title from './Title';
 
 export default class Deck extends React.Component {
-
-  componentDidMount() {
-    console.log(this.props)
-  }
-
   render() {
     return (
       <TouchableOpacity style={styles.boxDeck} onPress={() => this.props.navigation.navigate(

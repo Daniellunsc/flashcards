@@ -7,13 +7,8 @@ import { connect } from 'react-redux';
 import { addDeck } from '../actions';
 
 class NewDeck extends React.Component {
-
   state = {
     deckName: null
-  }
-
-  componentDidMount() {
-    console.log(this.props)
   }
 
   submitDeck = () => {
