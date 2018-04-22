@@ -3,8 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'rea
 import Title from './Title';
 import { red, blue, white } from '../helpers/colors'
 import { connect } from 'react-redux';
+import { clearLocalNotification, setNotification } from '../helpers/helpers';
 
 class Quiz extends React.Component {
+
+  componentDidMount() {
+    clearLocalNotification().then(setNotification())
+  }
 
   state = {
     cardIndex: 0,

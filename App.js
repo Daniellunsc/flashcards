@@ -13,6 +13,7 @@ import { red, white } from './helpers/colors';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './reducer';
+import { clearLocalNotification, setNotification } from './helpers/helpers';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -103,6 +104,8 @@ export default class App extends React.Component {
     loading: true,
   }
   componentDidMount() {
+    clearLocalNotification()
+    setNotification()
     API.initDeck().then(this.setState({ loading: false }))
   }
 

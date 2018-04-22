@@ -7,6 +7,7 @@ import * as API from '../helpers/api';
 import { receiveDecks } from '../actions';
 import { connect } from 'react-redux';
 
+
 class DeckList extends React.Component {
   componentDidMount() {
     API.getDecks().then(res => this.props.defineDecks(JSON.parse(res)))
@@ -17,9 +18,12 @@ class DeckList extends React.Component {
   }
 
   render() {
-    // TO-DO Melhorar view durante carregamento
     if (!this.props.decks) {
-      return (<View><Title>No Decks</Title></View>)
+      return (
+        <View style={styles.mainContainer}>
+          <Title style={styles.MainTitle}>No Decks</Title>
+        </View>
+      )
     }
 
     return (
