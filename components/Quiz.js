@@ -6,11 +6,6 @@ import { connect } from 'react-redux';
 import { clearLocalNotification, setNotification } from '../helpers/helpers';
 
 class Quiz extends React.Component {
-
-  componentDidMount() {
-    clearLocalNotification().then(setNotification())
-  }
-
   state = {
     cardIndex: 0,
     right: 0,
@@ -44,6 +39,15 @@ class Quiz extends React.Component {
       wrong: 0,
       showAnswer: false,
     })
+  }
+
+  completeQuiz = () => {
+    const { deck } = this.props;
+    const { cardIndex } = this.state;
+    if (deck.questions.length == cardIndex) {
+      clearLocalNotification().then(() => setNotification)
+      return alert('Quiz concluido!');
+    }
   }
 
   render() {
@@ -96,14 +100,15 @@ class Quiz extends React.Component {
     }
     return (
       <View style={styles.mainView}>
+        {this.completeQuiz()}
         <Title style={styles.question}>
           Quiz Finalizado!
         </Title>
         <Text style={styles.text}>
-          Certos: {`${(right * 100) / deck.questions.length} % `}
+          Certos: {`${parseFloat((right * 100) / deck.questions.length).toFixed(1)} % `}
         </Text>
         <Text style={styles.text}>
-          Errados: {`${(wrong * 100) / deck.questions.length} % `}
+          Errados: {`${parseFloat((wrong * 100) / deck.questions.length).toFixed(1)} % `}
         </Text>
 
         <TouchableOpacity style={[styles.Btn, styles.correctBtn]} onPress={() => this.setDefault()}>

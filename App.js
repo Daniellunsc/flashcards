@@ -70,7 +70,7 @@ const MainNavigator = StackNavigator({
       headerTintColor: white,
       headerStyle: {
         backgroundColor: red,
-        marginTop: -50,
+        marginTop: -20,
       }
     }
   },
@@ -81,7 +81,7 @@ const MainNavigator = StackNavigator({
       headerTintColor: white,
       headerStyle: {
         backgroundColor: red,
-        marginTop: -50,
+        marginTop: -20,
       }
     }
   },
@@ -93,7 +93,7 @@ const MainNavigator = StackNavigator({
       title: 'Quiz',
       headerStyle: {
         backgroundColor: red,
-        marginTop: -50,
+        marginTop: -20,
       }
     }
   }
@@ -104,7 +104,6 @@ export default class App extends React.Component {
     loading: true,
   }
   componentDidMount() {
-    clearLocalNotification()
     setNotification()
     API.initDeck().then(this.setState({ loading: false }))
   }

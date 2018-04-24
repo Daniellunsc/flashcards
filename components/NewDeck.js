@@ -21,7 +21,11 @@ class NewDeck extends React.Component {
       }
     }
 
-    if (deckName != null) {
+    if (deckName) {
+      if(deckName.trim() == 0){
+        alert('Apenas espaços em branco não são permitidos!');
+        return;
+      }
       API.saveDeckTitle(deckName)
         .then(() => this.props.addDeckInStore(DeckStructure))
         .then(() => alert('Deck adicionado com sucesso'))

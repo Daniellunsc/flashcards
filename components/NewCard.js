@@ -22,14 +22,24 @@ class NewCard extends React.Component {
 
   submitCard = () => {
     const { id } = this.props.navigation.state.params
-    card = {
-      answer: this.state.answer,
-      question: this.state.question,
+    if (this.state.answer && this.state.question) {
+      if(this.state.answer.trim() == 0 || this.state.question.trim() == 0){
+        alert('Apenas espaços em brancos não são permitidos!');
+        return;
+      }
+      
+      card = {
+        answer: this.state.answer,
+        question: this.state.question,
+      }
+      API.addCardToDeck(id, card)
+        .then(() => this.props.saveCard(id, card))
+        .then(() => alert('Card Salvo com sucesso'))
+        .then(() => this.props.navigation.goBack())
+    } else {
+      alert('Verifique se não deixou nenhum campo em branco!');
     }
-    API.addCardToDeck(id, card)
-      .then(() => this.props.saveCard(id, card))
-      .then(() => alert('Card Salvo com sucesso'))
-      .then(() => this.props.navigation.goBack())
+
   }
 
   render() {

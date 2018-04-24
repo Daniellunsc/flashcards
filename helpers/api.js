@@ -39,7 +39,7 @@ export function initDeck() {
 }
 
 export function getDecks() {
-  return AsyncStorage.getItem(DECK_KEY);
+  return AsyncStorage.getItem(DECK_KEY).then(JSON.parse);
 }
 
 export function getDeck(id) {

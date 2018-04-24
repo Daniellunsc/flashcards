@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 class DeckList extends React.Component {
   componentDidMount() {
-    API.getDecks().then(res => this.props.defineDecks(JSON.parse(res)))
+    API.getDecks().then(res => this.props.defineDecks(res))
   }
 
   renderItem = ({ item }) => {
