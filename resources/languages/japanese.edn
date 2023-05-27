@@ -1,0 +1,20 @@
+[{:question "こんにちは", :answer "Olá"}
+ {:question "ありがとう", :answer "Obrigado"}
+ {:question "すみません", :answer "Desculpe"}
+ {:question "はい", :answer "Sim"}
+ {:question "いいえ", :answer "Não"}
+ {:question "おはよう", :answer "Bom dia"}
+ {:question "こんばんは", :answer "Boa noite"}
+ {:question "おやすみ", :answer "Boa noite"}
+ {:question "お願いします", :answer "Por favor"}
+ {:question "ごめんなさい", :answer "Desculpe"}
+ {:question "どういたしまして", :answer "De nada"}
+ {:question "はじめまして", :answer "Muito prazer"}
+ {:question "どうぞよろしくお願いします", :answer "Por favor, seja gentil comigo"}
+ {:question "いただきます", :answer "Vou começar a comer"}
+ {:question "ごちそうさま", :answer "Obrigado pela refeição"}
+ {:question "お疲れさま", :answer "Bom trabalho"}
+ {:question "いってきます", :answer "Estou saindo"}
+ {:question "ただいま", :answer "Estou de volta"}
+ {:question "おかえり", :answer "Bem-vindo de volta"}
+ {:question "いくつ", :answer "Quantos"}]
